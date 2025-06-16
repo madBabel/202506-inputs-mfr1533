@@ -9,21 +9,24 @@ on:
 
       target:
         description: "Which environment the workflow will target"  
-        type: string 
+        type: environment
 
       tag:
         description: "Release from which to build and deploy"
         required: false
         type: choice
         options:
-          - v1         
+          - v1   
+          - v2
+          - v3
+        default: v3      
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Build
-        run: echo "Building from tag ${{ inputs.branch }}"
+        run: echo "Building from tag ${{ inputs.tag }}"
 
   deploy:
     runs-on: ubuntu-latest
@@ -32,4 +35,4 @@ jobs:
     environment: ${{ inputs.target }}   
     steps:
       - name: Deploy
-        run: echo "Deploying to ' ${{ inputs.dryrun }} '" 
+        run: echo "Deploying to ' ${{ inputs.target }} '" 
